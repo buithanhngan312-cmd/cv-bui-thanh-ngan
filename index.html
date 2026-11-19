@@ -1,372 +1,932 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bùi Thanh Ngân | E-commerce Intern</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f8ff" />
+  <meta name="description" content="Portfolio cá nhân của Bùi Thanh Ngân – Sinh viên Thương mại điện tử, ứng tuyển thực tập." />
+  <title>Bùi Thanh Ngân | E-commerce Portfolio</title>
+
+  <!-- Tailwind CSS Browser CDN (phù hợp website tĩnh/không cần build) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --ink: #172b4d;
+      --muted: #62748e;
+      --blue: #3b82f6;
+      --cyan: #0ea5e9;
+      --line: rgba(148, 174, 210, .25);
+      --glass: rgba(255, 255, 255, .77);
     }
 
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 104px; }
     body {
-      font-family: Arial, sans-serif;
-      background: #f3f6fb;
-      color: #303b4a;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 5%, rgba(191, 219, 254, .48), transparent 28rem),
+        radial-gradient(circle at 94% 28%, rgba(186, 230, 253, .36), transparent 30rem),
+        #f7faff;
+      font-family: "Be Vietnam Pro", sans-serif;
       line-height: 1.7;
+      overflow-x: hidden;
     }
 
-    .container {
-      max-width: 1000px;
-      margin: 40px auto;
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 35px rgba(0,0,0,0.08);
+    #starfield {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
     }
 
-    header {
-      background: #9dc5f5;
+    main, body > footer { position: relative; z-index: 1; }
+    .font-display { font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif; }
+    .page-shell { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+    .glass-nav {
+      background: rgba(255, 255, 255, .76);
+      border: 1px solid rgba(255, 255, 255, .9);
+      box-shadow: 0 10px 35px rgba(57, 93, 145, .09);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .nav-link {
+      position: relative;
+      color: #536987;
+      font-size: .93rem;
+      font-weight: 800;
+      padding: .68rem 1rem;
+      border-radius: .9rem;
+      transition: color .2s ease, background .2s ease, transform .2s ease;
+      white-space: nowrap;
+    }
+    .nav-link:hover { transform: translateY(-1px); }
+    .nav-link:hover, .nav-link.active { color: #2563eb; background: #eff6ff; }
+    .nav-link.active::after {
+      content: "";
+      position: absolute;
+      height: 2px;
+      left: 13px;
+      right: 13px;
+      bottom: 4px;
+      background: linear-gradient(90deg, #3b82f6, #22c1dc);
+      border-radius: 99px;
+    }
+    .section-kicker { color: #397ee7; letter-spacing: .15em; text-transform: uppercase; font-size: .72rem; font-weight: 800; }
+    .section-title { color: #19365d; letter-spacing: -.04em; }
+    .blue-gradient {
+      background: linear-gradient(105deg, #2563eb 5%, #0ea5e9 54%, #4f9cf9 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .soft-card {
+      background: rgba(255,255,255,.86);
+      border: 1px solid rgba(218, 231, 249, .95);
+      box-shadow: 0 12px 36px rgba(45, 83, 136, .055);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .soft-card:hover, .soft-card:focus-within {
+      transform: translateY(-5px) scale(1.012);
+      border-color: rgba(96, 165, 250, .55);
+      box-shadow: 0 20px 45px rgba(45, 101, 176, .13);
+    }
+    .btn-primary {
+      background: linear-gradient(110deg, #347cf3, #159ed8);
       color: white;
-      padding: 45px;
-      display: flex;
-      align-items: center;
-      gap: 28px;
+      box-shadow: 0 10px 24px rgba(59, 130, 246, .23);
+      transition: transform .2s ease, box-shadow .2s ease;
     }
-
-    .avatar {
-      width: 125px;
-      height: 125px;
-      flex-shrink: 0;
-      border-radius: 12px;
-      background: white;
-      color: #649bd4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      font-weight: bold;
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(59, 130, 246, .3); }
+    .btn-secondary {
+      background: rgba(255,255,255,.8);
+      color: #2866bd;
+      border: 1px solid #d6e6fb;
+      transition: background .2s ease, transform .2s ease;
     }
-
-    header h1 {
-      font-size: 32px;
-      margin-bottom: 5px;
+    .btn-secondary:hover { background: #eff6ff; transform: translateY(-2px); }
+    .avatar-frame {
+      position: relative;
+      width: min(330px, 78vw);
+      aspect-ratio: 4 / 4.45;
+      margin-inline: auto;
+      border-radius: 32px;
+      padding: 10px;
+      background: linear-gradient(145deg, rgba(255,255,255,.95), rgba(191,219,254,.9));
+      box-shadow: 0 24px 70px rgba(52, 117, 204, .2);
+      transform: rotate(2deg);
     }
-
-    header p {
-      font-size: 15px;
-      letter-spacing: 1px;
+    .avatar-inner {
+      width: 100%; height: 100%; overflow: hidden; border-radius: 24px;
+      background: linear-gradient(145deg, #dbeafe, #eff6ff 55%, #c7e9fb);
+      display: grid; place-items: center; position: relative;
     }
-
-    main {
-      padding: 35px 40px;
+    .avatar-fallback {
+      width: 132px; height: 132px; border-radius: 50%;
+      display: grid; place-items: center;
+      color: #fff; font: 800 3rem "Plus Jakarta Sans", sans-serif;
+      background: linear-gradient(145deg, #60a5fa, #22c1dc);
+      box-shadow: 0 16px 35px rgba(37, 99, 235, .22);
     }
-
-    .intro {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 35px;
-      padding-bottom: 28px;
-      border-bottom: 1px solid #dce4ee;
+    .avatar-inner img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      display: none;
     }
-
-    section {
-      margin-bottom: 30px;
+    .avatar-note {
+      position: absolute; bottom: 22px; left: -25px;
+      background: rgba(255,255,255,.92); border: 1px solid white;
+      box-shadow: 0 12px 30px rgba(39, 83, 142, .12);
+      border-radius: 14px; padding: 10px 14px; transform: rotate(-2deg);
     }
-
-    h2 {
-      color: #477fb9;
-      font-size: 19px;
-      margin-bottom: 13px;
-      text-transform: uppercase;
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .skill-pill {
+      display: inline-flex; align-items: center; gap: .45rem;
+      border: 1px solid #dceafe; background: #f4f8ff; color: #3d6599;
+      padding: .48rem .75rem; border-radius: 999px; font-size: .78rem; font-weight: 600;
     }
-
-    h3 {
-      font-size: 16px;
-      color: #344b65;
-      margin-bottom: 3px;
+    .timeline-line { position: absolute; left: 9px; top: 13px; bottom: 18px; width: 2px; background: linear-gradient(#60a5fa, #c7e6fb); }
+    .timeline-dot { position: absolute; left: 2px; top: 7px; width: 16px; height: 16px; border-radius: 50%; background: #3b82f6; border: 4px solid #dbeafe; box-shadow: 0 0 0 4px white; }
+    dialog {
+      width: min(560px, calc(100% - 32px)); border: 1px solid #dbeafe; border-radius: 24px;
+      padding: 0; color: var(--ink); background: rgba(255,255,255,.98);
+      box-shadow: 0 25px 90px rgba(19, 48, 87, .28);
     }
-
-    .contact p {
-      margin-bottom: 6px;
-      overflow-wrap: anywhere;
+    dialog::backdrop { background: rgba(20, 43, 76, .48); backdrop-filter: blur(7px); }
+    .music-widget {
+      position: fixed; z-index: 30; right: 22px; bottom: 20px;
+      width: min(310px, calc(100vw - 28px));
+      background: rgba(255,255,255,.9); border: 1px solid rgba(255,255,255,.95);
+      box-shadow: 0 14px 45px rgba(37, 75, 130, .16); backdrop-filter: blur(16px);
+      border-radius: 18px; padding: 12px 14px;
     }
+    input[type="range"] { accent-color: #3b82f6; width: 100%; }
 
-    a {
-      color: #477fb9;
-      text-decoration: none;
+    /* Cửa sổ chi tiết dự án lớn, dễ đọc trên màn hình rộng */
+    dialog {
+      width: min(1360px, calc(100vw - 56px));
+      max-width: none;
+      min-height: min(740px, 82vh);
+      max-height: calc(100dvh - 56px);
+      margin: auto;
+      overflow-y: auto;
+      overscroll-behavior: contain;
     }
-
-    a:hover {
-      text-decoration: underline;
+    .dialog-shell { padding: clamp(24px, 4vw, 48px); }
+    .dialog-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, .75fr); gap: 24px; }
+    .education-card { min-height: 390px; }
+    .music-launcher {
+      position: fixed; z-index: 31; right: 22px; bottom: 20px;
+      display: grid; width: 54px; height: 54px; place-items: center;
+      border: 1px solid rgba(255,255,255,.95); border-radius: 18px;
+      background: linear-gradient(135deg, #2563eb, #0ea5e9);
+      color: white; font-size: 25px; font-weight: 800;
+      box-shadow: 0 14px 35px rgba(37,99,235,.28);
+      cursor: pointer; transition: transform .2s ease, box-shadow .2s ease;
     }
+    .music-launcher:hover { transform: translateY(-3px); box-shadow: 0 18px 38px rgba(37,99,235,.34); }
+    .music-launcher.hidden { display: none !important; }
+    .music-hide-button { line-height: 1; }
 
-    .projects {
-      padding-top: 28px;
-      border-bottom: 1px solid #dce4ee;
-    }
-
-    .project {
-      margin-bottom: 23px;
-    }
-
-    .course {
-      color: #718096;
-      font-size: 14px;
-      font-style: italic;
-      margin-bottom: 7px;
-    }
-
-    ul {
-      padding-left: 20px;
-    }
-
-    li {
-      margin-bottom: 5px;
-    }
-
-    .bottom {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 35px;
-      padding-top: 28px;
-    }
-
-    .skill-group {
-      margin-bottom: 13px;
-    }
-
-    .skill-group h3 {
-      font-size: 15px;
-      margin-bottom: 4px;
-    }
-
-    .tag-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .tag {
-      background: #edf4fc;
-      color: #477fb9;
-      padding: 5px 11px;
-      border-radius: 20px;
-      font-size: 13px;
-    }
-
-    .education-item {
-      margin-bottom: 20px;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 15px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 9px 18px;
-      border-radius: 7px;
-      background: #568fc9;
-      color: white;
-      font-size: 14px;
-    }
-
-    .btn:hover {
-      background: #376fa9;
-      text-decoration: none;
-    }
-
-    footer {
-      text-align: center;
-      background: #edf4fc;
-      color: #718096;
-      padding: 15px;
-      font-size: 13px;
-    }
-
-    @media (max-width: 650px) {
-      .container {
-        margin: 12px;
-        border-radius: 10px;
+    @media (max-width: 767px) {
+      dialog {
+        width: calc(100vw - 20px);
+        min-height: calc(100dvh - 20px);
+        max-height: calc(100dvh - 20px);
+        border-radius: 20px;
       }
+      .dialog-shell { padding: 22px 18px; }
+      .dialog-grid { grid-template-columns: 1fr; gap: 16px; }
+      .education-card { min-height: auto; }
+      .music-launcher { right: 12px; bottom: 12px; }
+    }
+    .music-bars span { display: block; width: 3px; border-radius: 4px; background: #60a5fa; height: 6px; }
+    .music-widget.playing .music-bars span { animation: equalize .7s ease-in-out infinite alternate; }
+    .music-widget.playing .music-bars span:nth-child(2) { animation-delay: .15s; }
+    .music-widget.playing .music-bars span:nth-child(3) { animation-delay: .3s; }
+    .music-widget.playing .music-bars span:nth-child(4) { animation-delay: .1s; }
+    @keyframes equalize { to { height: 17px; opacity: .65; } }
+    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+    .floaty { animation: floaty 5s ease-in-out infinite; }
+    .focus-ring:focus-visible { outline: 3px solid rgba(59,130,246,.5); outline-offset: 3px; }
 
-      header {
-        padding: 28px 22px;
-        flex-direction: column;
-        text-align: center;
+    @media (max-width: 767px) {
+      html { scroll-padding-top: 88px; }
+      .page-shell { width: min(100% - 28px, 680px); }
+      .desktop-nav { display: none; }
+      .desktop-nav.open {
+        display: flex; position: absolute; top: calc(100% + 9px); left: 0; right: 0;
+        padding: 12px; border-radius: 18px; flex-direction: column; align-items: stretch;
+        background: rgba(255,255,255,.96); border: 1px solid #e3edfb;
+        box-shadow: 0 16px 35px rgba(45,83,136,.12);
       }
+      .desktop-nav.open .nav-link { text-align: left; }
+      .nav-link.active::after { display: none; }
+      .avatar-frame { width: min(270px, 72vw); }
+      .music-widget { right: 12px; bottom: 12px; }
+    }
+    .education-card:hover { transform: translateY(-5px); }
+    .music-widget { padding: 14px 15px; }
+    .music-widget button:focus-visible, .music-launcher:focus-visible { outline: 3px solid rgba(59,130,246,.45); outline-offset: 3px; }
+    .nav-link.active { font-weight: 800; }
 
-      header h1 {
-        font-size: 25px;
-      }
+    @media (max-width: 767px) {
+      .nav-link { font-size: .95rem; padding: .72rem .9rem; }
+      .dialog-grid { grid-template-columns: 1fr; }
+      .music-widget { right: 12px; bottom: 12px; }
+    }
 
-      main {
-        padding: 25px 22px;
-      }
-
-      .intro,
-      .bottom {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
-
 <body>
+  <canvas id="starfield" aria-hidden="true"></canvas>
 
-  <div class="container">
+  <!-- NAVBAR -->
+  <div class="sticky top-0 z-40 px-3 pt-3">
+    <nav class="glass-nav page-shell relative flex items-center justify-between rounded-2xl px-4 py-3" aria-label="Điều hướng chính">
+      <a href="#home" class="flex items-center gap-3 rounded-xl focus-ring" aria-label="Về đầu trang">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 font-display text-sm font-extrabold text-white shadow-lg shadow-blue-200">BN</span>
+        <span class="font-display text-sm font-extrabold tracking-tight text-slate-800">Thanh Ngân<span class="text-blue-500">.</span></span>
+      </a>
 
-    <header>
-      <div class="avatar">TN</div>
-      <div>
-        <h1>BÙI THANH NGÂN</h1>
-        <p>SINH VIÊN THƯƠNG MẠI ĐIỆN TỬ | ỨNG TUYỂN THỰC TẬP</p>
-      </div>
-    </header>
-
-    <main>
-
-      <div class="intro">
-
-        <section>
-          <h2>Mục tiêu thực tập</h2>
-          <p>
-            Sinh viên ngành Thương mại điện tử tại Đại học Kinh tế TP.HCM,
-            mong muốn ứng tuyển vị trí Thực tập sinh Thương mại điện tử.
-            Có kiến thức nền tảng về SEO sản phẩm và tìm hiểu dữ liệu kinh
-            doanh trên các nền tảng trực tuyến. Mong muốn vận dụng kiến
-            thức vào hoạt động vận hành, quản lý nội dung và kinh doanh
-            trực tuyến, đồng thời tích lũy kinh nghiệm thực tế tại doanh nghiệp.
-          </p>
-        </section>
-
-        <section class="contact">
-          <h2>Thông tin liên hệ</h2>
-          <p>☎ 033 318 4311</p>
-          <p>✉
-            <a href="mailto:buithanhngan312@gmail.com">
-              buithanhngan312@gmail.com
-            </a>
-          </p>
-          <p>⌖ Tân Phước, Phường Tân Đông Hiệp, TP. Hồ Chí Minh</p>
-
-          <div class="buttons">
-            <a class="btn" href="mailto:buithanhngan312@gmail.com">
-              Liên hệ với tôi
-            </a>
-            <a class="btn"
-               href="https://github.com/buithanhngan312-cmd"
-               target="_blank">
-              GitHub
-            </a>
-          </div>
-        </section>
-
+      <div id="navLinks" class="desktop-nav flex items-center gap-1">
+        <a class="nav-link active" href="#about">Giới thiệu</a>
+        <a class="nav-link" href="#projects">Dự án</a>
+        <a class="nav-link" href="#skills">Kỹ năng</a>
+        <a class="nav-link" href="#education">Học vấn</a>
+        <a class="nav-link" href="#contact">Liên hệ</a>
       </div>
 
-      <section class="projects">
-        <h2>Dự án và trải nghiệm học tập</h2>
-
-        <div class="project">
-          <h3>1. Thiết kế website bán hàng bằng WordPress – Ốc Len Shop</h3>
-          <p class="course">Học phần: Công nghệ Thương mại điện tử</p>
-          <ul>
-            <li>Thiết kế và xây dựng website bán hàng trên nền tảng WordPress.</li>
-            <li>Đăng tải, sắp xếp và trình bày thông tin, hình ảnh sản phẩm.</li>
-            <li>Thực hành SEO nhằm cải thiện khả năng hiển thị website;
-              sử dụng Google Analytics để theo dõi lưu lượng truy cập.</li>
-          </ul>
-        </div>
-
-        <div class="project">
-          <h3>2. Tìm hiểu dữ liệu kinh doanh và tối ưu SEO trên sàn TMĐT</h3>
-          <p class="course">Học phần: Marketing kỹ thuật số</p>
-          <ul>
-            <li>Tiếp cận dữ liệu kinh doanh trên TikTok Shop thông qua
-              các chỉ số GMV, đơn hàng, người mua, lượt truy cập và sản phẩm bán ra.</li>
-            <li>Theo dõi biến động các chỉ số qua từng giai đoạn
-              để tìm hiểu hiệu quả kinh doanh.</li>
-            <li>Tìm hiểu cách tối ưu SEO sản phẩm trên Shopee
-              thông qua từ khóa, tiêu đề, mô tả và hình ảnh.</li>
-          </ul>
-        </div>
-      </section>
-
-      <div class="bottom">
-
-        <section>
-          <h2>Kỹ năng và chứng chỉ</h2>
-
-          <div class="skill-group">
-            <h3>Chứng chỉ</h3>
-            <p>Microsoft Office Specialist (MOS): Excel, Word.</p>
-          </div>
-
-          <div class="skill-group">
-            <h3>Kỹ năng chuyên môn</h3>
-            <ul>
-              <li>SEO sản phẩm, quản lý nội dung website.</li>
-              <li>Tổng hợp và theo dõi dữ liệu kinh doanh TMĐT.</li>
-            </ul>
-          </div>
-
-          <div class="skill-group">
-            <h3>Tin học và công cụ</h3>
-            <div class="tag-list">
-              <span class="tag">Microsoft Excel</span>
-              <span class="tag">Word</span>
-              <span class="tag">Google Sheets</span>
-              <span class="tag">WordPress</span>
-              <span class="tag">Google Analytics</span>
-              <span class="tag">Canva</span>
-              <span class="tag">CapCut</span>
-              <span class="tag">VS Code</span>
-              <span class="tag">GitHub</span>
-            </div>
-          </div>
-
-          <div class="skill-group">
-            <h3>Ngoại ngữ</h3>
-            <p>Tiếng Anh cơ bản.</p>
-          </div>
-        </section>
-
-        <section>
-          <h2>Học vấn</h2>
-
-          <div class="education-item">
-            <h3>Đại học Kinh tế TP. Hồ Chí Minh (UEH)</h3>
-            <p>Ngành Thương mại điện tử</p>
-            <p>Thời gian: 2023 – 2027</p>
-            <p>Trạng thái: Đang theo học</p>
-          </div>
-
-          <div class="education-item">
-            <h3>Trường Cao đẳng Công nghệ cao Đồng An</h3>
-            <p>Ngành Quản trị Kinh doanh</p>
-            <p>Trình độ: Cao đẳng</p>
-            <p>Trạng thái: Đã tốt nghiệp</p>
-          </div>
-        </section>
-
-      </div>
-
-    </main>
-
-    <footer>
-      © 2026 Bùi Thanh Ngân | Personal CV Website
-    </footer>
-
+      <button id="menuButton" class="focus-ring grid h-10 w-10 place-items-center rounded-xl border border-blue-100 bg-white text-blue-700 md:hidden" aria-label="Mở menu" aria-expanded="false">
+        <svg id="menuIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </nav>
   </div>
 
+  <main>
+    <!-- HERO -->
+    <section id="home" class="page-shell grid min-h-[650px] items-center gap-12 py-20 md:grid-cols-[1.12fr_.88fr] md:py-24">
+      <div class="reveal order-2 md:order-1">
+        <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/80 px-4 py-2 text-xs font-bold text-blue-700 shadow-sm">
+          <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-60"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-blue-500"></span></span>
+          SẴN SÀNG HỌC HỎI & PHÁT TRIỂN
+        </div>
+        <p class="mb-3 text-sm font-semibold tracking-wide text-slate-500">Xin chào, mình là</p>
+        <h1 class="font-display text-4xl font-extrabold leading-tight tracking-[-.055em] text-slate-900 sm:text-5xl lg:text-6xl">Bùi Thanh <span class="blue-gradient">Ngân</span></h1>
+        <div class="mt-5 flex min-h-9 items-center gap-2 font-display text-lg font-bold sm:text-xl">
+          <span class="blue-gradient" id="typingText">E-commerce Intern</span><span class="h-6 w-[2px] animate-pulse bg-sky-500" aria-hidden="true"></span>
+        </div>
+        <p class="mt-5 max-w-xl text-sm leading-8 text-slate-600 sm:text-base">Sinh viên Thương mại điện tử tại UEH, quan tâm đến vận hành kinh doanh trực tuyến, SEO sản phẩm, quản lý nội dung website và dữ liệu kinh doanh.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#projects" class="btn-primary focus-ring inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-bold">Khám phá dự án <span aria-hidden="true">↗</span></a>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=buithanhngan312%40gmail.com" target="_blank" rel="noopener noreferrer" class="btn-secondary focus-ring inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-bold">Liên hệ với mình</a>
+        </div>
+        <div class="mt-9 flex flex-wrap gap-2">
+          <span class="skill-pill">E-commerce</span><span class="skill-pill">SEO</span><span class="skill-pill">Website</span><span class="skill-pill">Business Data</span>
+        </div>
+      </div>
+
+      <div class="reveal order-1 md:order-2">
+        <div class="avatar-frame floaty">
+          <div class="avatar-inner">
+            <div class="avatar-fallback" id="avatarFallback">BN</div>
+            <!-- Để thay ảnh: tải ảnh chân dung lên repo cùng cấp với index.html và đặt tên avatar.jpg -->
+            <img id="avatarImage" src="avatar.jpg" alt="Ảnh chân dung Bùi Thanh Ngân" />
+            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-blue-950/45 to-transparent p-5 pt-20 text-white">
+              <p class="font-display text-lg font-extrabold">Bùi Thanh Ngân</p>
+              <p class="text-xs text-white/85">Sinh viên Thương mại điện tử</p>
+            </div>
+          </div>
+          <div class="avatar-note">
+            <p class="text-xs font-bold text-slate-800">✨ Learning by doing</p>
+            <p class="text-[10px] text-slate-500">Học hỏi · Thực hành · Phát triển</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="page-shell scroll-mt-28 py-16 md:py-20">
+      <div class="reveal mb-8 text-center">
+        <p class="section-kicker">01 / GIỚI THIỆU</p>
+        <h2 class="section-title mt-2 font-display text-3xl font-extrabold sm:text-4xl">Giới thiệu <span class="blue-gradient">bản thân</span></h2>
+        <p class="mx-auto mt-3 max-w-2xl text-sm leading-7 text-slate-500">Nền tảng học tập và định hướng phát triển trong lĩnh vực Thương mại điện tử.</p>
+      </div>
+      <div class="reveal soft-card grid gap-7 rounded-3xl p-6 md:grid-cols-[1fr_.78fr] md:p-9">
+        <div>
+          <h3 class="font-display text-xl font-extrabold text-slate-800">Mục tiêu thực tập</h3>
+          <p class="mt-4 text-sm leading-8 text-slate-600">Sinh viên ngành Thương mại điện tử tại Đại học Kinh tế TP.HCM (UEH), mong muốn ứng tuyển vị trí Thực tập sinh Thương mại điện tử. Có kiến thức nền tảng về SEO sản phẩm và tìm hiểu dữ liệu kinh doanh trên các nền tảng trực tuyến. Mong muốn vận dụng kiến thức vào hoạt động vận hành, quản lý nội dung và kinh doanh trực tuyến, đồng thời tích lũy kinh nghiệm thực tế tại doanh nghiệp.</p>
+        </div>
+        <div class="rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 p-6">
+          <p class="text-xs font-extrabold uppercase tracking-[.16em] text-blue-600">Thông tin nhanh</p>
+          <div class="mt-5 space-y-4 text-sm">
+            <div><p class="text-xs text-slate-400">Họ và tên</p><p class="font-bold text-slate-700">Bùi Thanh Ngân</p></div>
+            <div><p class="text-xs text-slate-400">Chuyên ngành</p><p class="font-bold text-slate-700">Thương mại điện tử</p></div>
+            <div><p class="text-xs text-slate-400">Trường đang theo học</p><p class="font-bold text-slate-700">Đại học Kinh tế TP.HCM (UEH)</p></div>
+            <div><p class="text-xs text-slate-400">Định hướng</p><p class="font-bold text-slate-700">Thực tập sinh Thương mại điện tử</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="scroll-mt-28 bg-white/55 py-16 md:py-20">
+      <div class="page-shell">
+        <div class="reveal mb-9 text-center">
+          <p class="section-kicker">02 / DỰ ÁN</p>
+          <h2 class="section-title mt-2 font-display text-3xl font-extrabold sm:text-4xl">Dự án & trải nghiệm <span class="blue-gradient">học tập</span></h2>
+          <p class="mx-auto mt-3 max-w-2xl text-sm leading-7 text-slate-500">Một số nội dung đã thực hành và tìm hiểu trong quá trình học tập.</p>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <article class="project-card soft-card reveal cursor-pointer rounded-3xl p-6 md:p-7" tabindex="0" role="button" aria-label="Xem chi tiết dự án Ốc Len Shop" data-project="wordpress">
+            <div class="mb-6 flex items-start justify-between">
+              <div class="grid h-14 w-14 place-items-center rounded-2xl bg-blue-100 text-2xl">🛍️</div>
+              <span class="rounded-full bg-blue-50 px-3 py-1 text-[11px] font-bold text-blue-600">WORDPRESS</span>
+            </div>
+            <p class="section-kicker">DỰ ÁN 01</p>
+            <h3 class="mt-2 font-display text-xl font-extrabold leading-snug text-slate-800">Thiết kế website bán hàng – Ốc Len Shop</h3>
+            <p class="mt-2 text-xs font-medium italic text-slate-400">Học phần: Công nghệ Thương mại điện tử</p>
+            <p class="mt-4 text-sm leading-7 text-slate-600">Thực hành xây dựng website bán hàng, trình bày thông tin sản phẩm, tìm hiểu SEO và sử dụng Google Analytics để theo dõi lưu lượng truy cập.</p>
+            <div class="mt-5 flex flex-wrap gap-2"><span class="skill-pill">WordPress</span><span class="skill-pill">SEO</span><span class="skill-pill">Google Analytics</span></div>
+            <a href="https://oclenyarnshop.id.vn/" target="_blank" rel="noopener noreferrer" data-external-link class="mt-5 inline-flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-4 py-2.5 text-sm font-bold text-blue-700 transition hover:-translate-y-0.5 hover:bg-blue-100">Truy cập website Ốc Len Shop <span aria-hidden="true">↗</span></a>
+            <div class="mt-4 flex items-center gap-2 text-sm font-bold text-blue-600">Xem nội dung dự án <span aria-hidden="true">↗</span></div>
+          </article>
+
+          <article class="project-card soft-card reveal cursor-pointer rounded-3xl p-6 md:p-7" tabindex="0" role="button" aria-label="Xem chi tiết dự án dữ liệu kinh doanh và SEO" data-project="marketplace">
+            <div class="mb-6 flex items-start justify-between">
+              <div class="grid h-14 w-14 place-items-center rounded-2xl bg-cyan-100 text-2xl">📊</div>
+              <span class="rounded-full bg-cyan-50 px-3 py-1 text-[11px] font-bold text-cyan-700">DỮ LIỆU TMĐT</span>
+            </div>
+            <p class="section-kicker">DỰ ÁN 02</p>
+            <h3 class="mt-2 font-display text-xl font-extrabold leading-snug text-slate-800">Dữ liệu kinh doanh & tối ưu SEO trên sàn TMĐT</h3>
+            <p class="mt-2 text-xs font-medium italic text-slate-400">Học phần: Marketing kỹ thuật số</p>
+            <p class="mt-4 text-sm leading-7 text-slate-600">Tiếp cận các chỉ số kinh doanh trên TikTok Shop và tìm hiểu cách tối ưu nội dung sản phẩm trên Shopee.</p>
+            <div class="mt-5 flex flex-wrap gap-2"><span class="skill-pill">TikTok Shop</span><span class="skill-pill">GMV</span><span class="skill-pill">Shopee SEO</span></div>
+            <div class="mt-6 flex items-center gap-2 text-sm font-bold text-blue-600">Xem nội dung dự án <span aria-hidden="true">↗</span></div>
+          </article>
+        </div>
+        <p class="reveal mt-5 text-center text-xs text-slate-400">* Các dự án được thực hiện/tìm hiểu trong khuôn khổ học phần.</p>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="page-shell scroll-mt-28 py-16 md:py-20">
+      <div class="reveal mb-9 text-center">
+        <p class="section-kicker">03 / KỸ NĂNG</p>
+        <h2 class="section-title mt-2 font-display text-3xl font-extrabold sm:text-4xl">Kỹ năng & <span class="blue-gradient">chứng chỉ</span></h2>
+        <p class="mt-3 text-sm text-slate-500">Những kiến thức và công cụ đã học hoặc từng tiếp cận.</p>
+      </div>
+
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <article class="soft-card reveal rounded-3xl p-6" title="Chứng chỉ tin học văn phòng">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-blue-100 text-xl">🏅</div>
+          <h3 class="mt-4 font-display font-extrabold text-slate-800">Chứng chỉ</h3>
+          <p class="mt-2 text-sm leading-7 text-slate-600">Microsoft Office Specialist (MOS): Excel, Word.</p>
+        </article>
+        <article class="soft-card reveal rounded-3xl p-6" title="Kỹ năng chuyên môn về thương mại điện tử">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-cyan-100 text-xl">🧩</div>
+          <h3 class="mt-4 font-display font-extrabold text-slate-800">Kỹ năng chuyên môn</h3>
+          <ul class="mt-2 list-disc space-y-1 pl-4 text-sm leading-6 text-slate-600"><li>SEO sản phẩm</li><li>Quản lý nội dung website</li><li>Tổng hợp và theo dõi dữ liệu kinh doanh TMĐT</li></ul>
+        </article>
+        <article class="soft-card reveal rounded-3xl p-6" title="Các phần mềm và công cụ đã tiếp cận">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-indigo-100 text-xl">💻</div>
+          <h3 class="mt-4 font-display font-extrabold text-slate-800">Tin học & công cụ</h3>
+          <div class="mt-3 flex flex-wrap gap-2"><span class="skill-pill">Excel</span><span class="skill-pill">Word</span><span class="skill-pill">Google Sheets</span><span class="skill-pill">Google Analytics</span><span class="skill-pill">Canva</span><span class="skill-pill">CapCut</span></div>
+        </article>
+        <article class="soft-card reveal rounded-3xl p-6" title="Ngoại ngữ">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-violet-100 text-xl">🌐</div>
+          <h3 class="mt-4 font-display font-extrabold text-slate-800">Ngoại ngữ</h3>
+          <p class="mt-2 text-sm leading-7 text-slate-600">Tiếng Anh cơ bản.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- HỌC VẤN -->
+    <section id="education" class="scroll-mt-28 bg-gradient-to-b from-blue-50/80 via-white/80 to-cyan-50/40 py-16 md:py-20">
+      <div class="page-shell">
+        <div class="reveal mb-10 text-center">
+          <p class="section-kicker">04 / HỌC VẤN</p>
+          <h2 class="section-title mt-2 font-display text-3xl font-extrabold sm:text-4xl">Hành trình <span class="blue-gradient">học tập</span></h2>
+          <p class="mx-auto mt-3 max-w-2xl text-sm leading-7 text-slate-500">Quá trình học tập từ nền tảng Quản trị kinh doanh đến chuyên ngành Thương mại điện tử.</p>
+        </div>
+
+        <div class="grid gap-5 md:grid-cols-2">
+          <article class="education-card soft-card reveal relative overflow-hidden rounded-3xl p-6 md:p-7">
+            <div class="absolute right-0 top-0 h-28 w-28 rounded-bl-[3rem] bg-blue-50"></div>
+            <div class="relative">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <span class="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-xs font-extrabold text-blue-700">
+                  <span class="h-2 w-2 rounded-full bg-blue-500"></span> ĐANG THEO HỌC
+                </span>
+                <span class="rounded-lg bg-white/90 px-3 py-1.5 text-sm font-extrabold text-slate-500 shadow-sm">2023 – 2027</span>
+              </div>
+              <div class="mt-7 grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-blue-500 to-sky-400 text-2xl text-white shadow-lg shadow-blue-200">🎓</div>
+              <p class="mt-5 text-xs font-extrabold uppercase tracking-[.14em] text-blue-600">Bậc đào tạo · Đại học</p>
+              <h3 class="mt-2 font-display text-xl font-extrabold leading-snug text-slate-800">Đại học Kinh tế TP. Hồ Chí Minh (UEH)</h3>
+              <p class="mt-2 text-sm font-semibold text-slate-600">Ngành Thương mại điện tử</p>
+              <div class="mt-5 rounded-2xl bg-blue-50/80 p-4">
+                <p class="text-xs font-bold text-blue-700">Trạng thái học tập</p>
+                <p class="mt-1 text-sm leading-6 text-slate-600">Đang theo học chương trình đại học ngành Thương mại điện tử.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="education-card soft-card reveal relative overflow-hidden rounded-3xl p-6 md:p-7">
+            <div class="absolute right-0 top-0 h-28 w-28 rounded-bl-[3rem] bg-cyan-50"></div>
+            <div class="relative">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <span class="inline-flex items-center gap-2 rounded-full border border-cyan-100 bg-cyan-50 px-3 py-1.5 text-xs font-extrabold text-cyan-700">
+                  <span class="h-2 w-2 rounded-full bg-cyan-500"></span> ĐÃ TỐT NGHIỆP
+                </span>
+                <span class="rounded-lg bg-white/90 px-3 py-1.5 text-sm font-extrabold text-slate-500 shadow-sm">Hoàn thành</span>
+              </div>
+              <div class="mt-7 grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-cyan-500 to-sky-400 text-2xl text-white shadow-lg shadow-cyan-100">📘</div>
+              <p class="mt-5 text-xs font-extrabold uppercase tracking-[.14em] text-cyan-700">Bậc đào tạo · Cao đẳng</p>
+              <h3 class="mt-2 font-display text-xl font-extrabold leading-snug text-slate-800">Trường Cao đẳng Công nghệ cao Đồng An</h3>
+              <p class="mt-2 text-sm font-semibold text-slate-600">Ngành Quản trị kinh doanh</p>
+              <div class="mt-5 rounded-2xl bg-cyan-50/80 p-4">
+                <p class="text-xs font-bold text-cyan-700">Trạng thái học tập</p>
+                <p class="mt-1 text-sm leading-6 text-slate-600">Đã tốt nghiệp trình độ Cao đẳng ngành Quản trị kinh doanh.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="reveal mt-6 rounded-3xl border border-blue-100 bg-white/80 p-5 shadow-sm md:flex md:items-center md:justify-between md:gap-6 md:p-6">
+          <div>
+            <p class="text-xs font-extrabold uppercase tracking-[.15em] text-blue-600">NỀN TẢNG HỌC TẬP</p>
+            <p class="mt-2 max-w-2xl text-sm leading-7 text-slate-600">Hành trình học tập kết hợp nền tảng Quản trị kinh doanh với kiến thức chuyên ngành Thương mại điện tử đang theo học tại UEH.</p>
+          </div>
+          <div class="mt-4 flex shrink-0 flex-wrap gap-2 md:mt-0">
+            <span class="skill-pill">Quản trị kinh doanh</span>
+            <span class="skill-pill">Thương mại điện tử</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="page-shell scroll-mt-28 py-16 md:py-24">
+      <div class="reveal relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 p-7 text-white shadow-2xl shadow-blue-200 md:p-12">
+        <div class="pointer-events-none absolute -right-14 -top-20 h-64 w-64 rounded-full border border-white/20"></div>
+        <div class="pointer-events-none absolute -right-2 -top-8 h-44 w-44 rounded-full border border-white/20"></div>
+        <div class="relative grid gap-8 md:grid-cols-[1fr_.8fr] md:items-center">
+          <div>
+            <p class="text-xs font-extrabold tracking-[.18em] text-blue-100">05 / LIÊN HỆ</p>
+            <h2 class="mt-3 font-display text-3xl font-extrabold leading-tight sm:text-4xl">Cùng kết nối và<br/>trao đổi cơ hội nhé!</h2>
+            <p class="mt-4 max-w-lg text-sm leading-7 text-blue-50">Mình luôn sẵn sàng tìm hiểu cơ hội thực tập và học hỏi thêm trong lĩnh vực Thương mại điện tử.</p>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=buithanhngan312%40gmail.com" target="_blank" rel="noopener noreferrer" class="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-extrabold text-blue-700 shadow-lg transition hover:-translate-y-1">Gửi email cho mình <span>↗</span></a>
+          </div>
+          <div class="rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-md">
+            <div class="space-y-5">
+              <div class="flex gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/15">✉</span><div><p class="text-xs text-blue-100">Email</p><a class="break-all text-sm font-bold hover:underline" href="https://mail.google.com/mail/?view=cm&fs=1&to=buithanhngan312%40gmail.com" target="_blank" rel="noopener noreferrer">buithanhngan312@gmail.com</a></div></div>
+              <div class="flex gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/15">☎</span><div><p class="text-xs text-blue-100">Điện thoại</p><a class="text-sm font-bold hover:underline" href="tel:+84333184311">+84 33 318 4311</a></div></div>
+              <div class="flex gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/15">⌖</span><div><p class="text-xs text-blue-100">Địa chỉ</p><p class="text-sm font-bold">Tân Phước, Phường Tân Đông Hiệp, TP.HCM</p></div></div>
+              <div class="flex gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/15">⌘</span><div><p class="text-xs text-blue-100">GitHub</p><a class="text-sm font-bold hover:underline" href="https://github.com/buithanhngan312-cmd" target="_blank" rel="noopener noreferrer">github.com/buithanhngan312-cmd</a></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-blue-100/70 bg-white/55 px-5 py-7 text-center">
+    <p class="font-display text-sm font-extrabold text-slate-700">Bùi Thanh Ngân <span class="text-blue-500">·</span> Hồ sơ năng lực cá nhân</p>
+    <p class="mt-1 text-xs text-slate-400">© <span id="currentYear">2026</span> · Được xây dựng bằng HTML, Tailwind CSS và JavaScript.</p>
+    <a href="#home" class="mt-3 inline-block text-xs font-bold text-blue-600 hover:underline">Trở về đầu trang ↑</a>
+  </footer>
+
+  <!-- CỬA SỔ CHI TIẾT DỰ ÁN -->
+  <dialog id="projectDialog" aria-labelledby="dialogTitle">
+    <div class="dialog-shell">
+      <div class="flex items-start justify-between gap-5">
+        <div>
+          <p class="section-kicker">CHI TIẾT DỰ ÁN</p>
+          <h2 id="dialogTitle" class="mt-3 max-w-3xl font-display text-2xl font-extrabold leading-tight text-slate-800 sm:text-3xl"></h2>
+          <p id="dialogCourse" class="mt-3 text-sm italic text-slate-400"></p>
+        </div>
+        <button id="closeDialog" class="focus-ring grid h-11 w-11 shrink-0 place-items-center rounded-full bg-slate-100 text-lg text-slate-600 transition hover:bg-blue-50 hover:text-blue-700" aria-label="Đóng cửa sổ chi tiết">✕</button>
+      </div>
+
+      <div class="dialog-grid mt-8">
+        <div class="min-w-0">
+          <div class="rounded-2xl border border-blue-100 bg-white p-5 sm:p-7">
+            <p class="text-xs font-extrabold uppercase tracking-[.14em] text-blue-600">NỘI DUNG THỰC HIỆN / TÌM HIỂU</p>
+            <ul id="dialogList" class="mt-5 list-disc space-y-4 pl-5 text-sm leading-8 text-slate-600 sm:text-base"></ul>
+          </div>
+        </div>
+
+        <aside class="dialog-aside rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 p-5 sm:p-7">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-white text-2xl shadow-sm">✦</div>
+          <p class="mt-5 text-xs font-extrabold uppercase tracking-[.14em] text-blue-700">TỔNG QUAN DỰ ÁN</p>
+          <p id="dialogSummary" class="mt-3 text-sm leading-7 text-slate-600"></p>
+          <p class="mt-7 text-xs font-extrabold uppercase tracking-[.14em] text-blue-700">CÔNG CỤ / NỀN TẢNG</p>
+          <div id="dialogTags" class="mt-3 flex flex-wrap gap-2"></div>
+          <p class="mt-7 rounded-xl border border-white/90 bg-white/75 p-4 text-xs leading-6 text-slate-500">Thông tin được trình bày theo trải nghiệm học tập và nội dung trong CV.</p>
+        </aside>
+      </div>
+
+      <div class="mt-7 flex flex-wrap items-center justify-between gap-3 border-t border-blue-100 pt-6">
+        <a id="dialogProjectLink" href="https://oclenyarnshop.id.vn/" target="_blank" rel="noopener noreferrer" class="hidden items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-blue-200 transition hover:-translate-y-0.5 hover:bg-blue-700">Truy cập website Ốc Len Shop <span aria-hidden="true">↗</span></a>
+        <button id="closeDialogBottom" class="btn-primary rounded-xl px-6 py-3 text-sm font-bold">Đóng chi tiết</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- TRÌNH PHÁT ÂM THANH NỀN: mặc định tắt, có thể thu gọn -->
+  <aside id="musicWidget" class="music-widget" aria-label="Trình phát âm thanh nền">
+    <div class="flex items-center gap-3">
+      <button id="musicToggle" class="focus-ring grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-600 text-white shadow-md shadow-blue-200" aria-label="Bật nhạc nền" aria-pressed="false">
+        <svg id="musicIcon" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <div class="min-w-0 flex-1">
+        <p class="text-xs font-extrabold text-slate-800">Nhạc nền thư giãn</p>
+        <p id="musicStatus" class="text-[10px] text-slate-500" aria-live="polite">Đang tắt · Nhấn nút phát để nghe</p>
+      </div>
+      <div class="music-bars flex h-6 items-center gap-1" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <button id="hideMusicWidget" class="focus-ring grid h-8 w-8 shrink-0 place-items-center rounded-lg text-lg text-slate-400 transition hover:bg-blue-50 hover:text-blue-700" aria-label="Ẩn bảng điều khiển âm thanh" title="Ẩn bảng điều khiển">×</button>
+    </div>
+    <div class="mt-3 flex items-center gap-2 pl-1">
+      <span class="text-[10px] font-semibold text-slate-500">Âm lượng</span>
+      <input id="volumeSlider" type="range" min="0" max="100" value="42" aria-label="Điều chỉnh âm lượng" />
+      <span id="volumeValue" class="w-9 text-right text-[10px] font-bold text-slate-500">42%</span>
+    </div>
+    <p class="mt-1 pl-1 text-[9px] text-slate-400">Âm thanh tạo trực tiếp trên trình duyệt · Không tự phát</p>
+  </aside>
+  <button id="showMusicWidget" class="music-launcher hidden focus-ring" type="button" aria-label="Hiện bảng điều khiển âm thanh" title="Hiện điều khiển âm thanh">
+    <span aria-hidden="true">♫</span>
+  </button>
+
+  <script>
+    // ---------- Mobile navigation ----------
+    const menuButton = document.getElementById('menuButton');
+    const navLinks = document.getElementById('navLinks');
+    menuButton.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+      menuButton.setAttribute('aria-label', isOpen ? 'Đóng menu' : 'Mở menu');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // ---------- Typing effect ----------
+    const typingText = document.getElementById('typingText');
+    const typingPhrases = ['E-commerce Intern', 'E-commerce Student', 'Learning & Growing'];
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reducedMotion) {
+      let phraseIndex = 0, charIndex = 0, deleting = false;
+      function typeLoop() {
+        const phrase = typingPhrases[phraseIndex];
+        typingText.textContent = phrase.slice(0, charIndex);
+        if (!deleting && charIndex < phrase.length) { charIndex++; setTimeout(typeLoop, 85); }
+        else if (!deleting) { deleting = true; setTimeout(typeLoop, 1300); }
+        else if (charIndex > 0) { charIndex--; setTimeout(typeLoop, 42); }
+        else { deleting = false; phraseIndex = (phraseIndex + 1) % typingPhrases.length; setTimeout(typeLoop, 350); }
+      }
+      typeLoop();
+    }
+
+    // ---------- Reveal on scroll ----------
+    const revealItems = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window && !reducedMotion) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
+        });
+      }, { threshold: 0.12 });
+      revealItems.forEach(item => revealObserver.observe(item));
+    } else {
+      revealItems.forEach(item => item.classList.add('is-visible'));
+    }
+
+    // ---------- Active navbar item ----------
+    const sections = [...document.querySelectorAll('main section[id]')];
+    const sectionLinks = [...document.querySelectorAll('.nav-link')];
+    if ('IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            sectionLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`));
+          }
+        });
+      }, { rootMargin: '-25% 0px -60% 0px' });
+      sections.forEach(section => sectionObserver.observe(section));
+    }
+
+    // ---------- Avatar placeholder fallback ----------
+    const avatarImage = document.getElementById('avatarImage');
+    const avatarFallback = document.getElementById('avatarFallback');
+    avatarImage.addEventListener('load', () => {
+      avatarImage.style.display = 'block';
+      avatarFallback.style.display = 'none';
+    });
+    avatarImage.addEventListener('error', () => {
+      avatarImage.style.display = 'none';
+      avatarFallback.style.display = 'grid';
+    });
+
+    // ---------- Cửa sổ chi tiết dự án ----------
+    const projectInfo = {
+      wordpress: {
+        title: 'Thiết kế website bán hàng bằng WordPress – Ốc Len Shop',
+        course: 'Học phần: Công nghệ Thương mại điện tử',
+        summary: 'Thực hành xây dựng website bán hàng, sắp xếp nội dung sản phẩm, tìm hiểu SEO và theo dõi lưu lượng truy cập website.',
+        tools: ['WordPress', 'SEO', 'Google Analytics'],
+        url: 'https://oclenyarnshop.id.vn/',
+        points: [
+          'Thiết kế và xây dựng website bán hàng trên nền tảng WordPress.',
+          'Đăng tải, sắp xếp và trình bày thông tin, hình ảnh sản phẩm.',
+          'Thực hành SEO nhằm cải thiện khả năng hiển thị website và sử dụng Google Analytics để theo dõi lưu lượng truy cập.'
+        ]
+      },
+      marketplace: {
+        title: 'Tìm hiểu dữ liệu kinh doanh và tối ưu SEO trên sàn TMĐT',
+        course: 'Học phần: Marketing kỹ thuật số',
+        summary: 'Tiếp cận các chỉ số kinh doanh trên TikTok Shop và tìm hiểu cách tối ưu nội dung sản phẩm trên Shopee.',
+        tools: ['TikTok Shop', 'GMV', 'Shopee SEO'],
+        points: [
+          'Tiếp cận dữ liệu kinh doanh trên TikTok Shop thông qua các chỉ số GMV, đơn hàng, người mua, lượt truy cập và sản phẩm bán ra.',
+          'Theo dõi biến động các chỉ số qua từng giai đoạn để tìm hiểu hiệu quả kinh doanh.',
+          'Tìm hiểu cách tối ưu SEO sản phẩm trên Shopee thông qua từ khóa, tiêu đề, mô tả và hình ảnh.'
+        ]
+      }
+    };
+    const projectDialog = document.getElementById('projectDialog');
+    function openProject(key) {
+      const data = projectInfo[key];
+      if (!data) return;
+      document.getElementById('dialogTitle').textContent = data.title;
+      document.getElementById('dialogCourse').textContent = data.course;
+      document.getElementById('dialogSummary').textContent = data.summary;
+      const tags = document.getElementById('dialogTags');
+      tags.replaceChildren();
+      data.tools.forEach(tool => {
+        const tag = document.createElement('span');
+        tag.className = 'skill-pill';
+        tag.textContent = tool;
+        tags.appendChild(tag);
+      });
+      const projectLink = document.getElementById('dialogProjectLink');
+      if (data.url) {
+        projectLink.href = data.url;
+        projectLink.classList.remove('hidden');
+        projectLink.classList.add('inline-flex');
+      } else {
+        projectLink.classList.add('hidden');
+        projectLink.classList.remove('inline-flex');
+      }
+      const list = document.getElementById('dialogList');
+      list.replaceChildren();
+      data.points.forEach(point => {
+        const li = document.createElement('li');
+        li.textContent = point;
+        list.appendChild(li);
+      });
+      if (typeof projectDialog.showModal === 'function') projectDialog.showModal();
+      else projectDialog.setAttribute('open', '');
+    }
+    function closeProjectDialog() { if (projectDialog.open) projectDialog.close(); }
+    document.getElementById('closeDialog').addEventListener('click', closeProjectDialog);
+    document.getElementById('closeDialogBottom').addEventListener('click', closeProjectDialog);
+    projectDialog.addEventListener('click', event => { if (event.target === projectDialog) closeProjectDialog(); });
+
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // ---------- Subtle interactive falling stars / particles ----------
+    (() => {
+      const canvas = document.getElementById('starfield');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let width = 0, height = 0, dpr = 1, particles = [], pointer = { x: -9999, y: -9999 }, frame = 0;
+      const maxParticles = Math.min(85, Math.max(35, Math.floor(window.innerWidth / 17)));
+      const random = (min, max) => Math.random() * (max - min) + min;
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        width = window.innerWidth; height = window.innerHeight;
+        canvas.width = Math.floor(width * dpr); canvas.height = Math.floor(height * dpr);
+        canvas.style.width = width + 'px'; canvas.style.height = height + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        particles = Array.from({ length: maxParticles }, () => makeStar(true));
+      }
+      function makeStar(initial = false) {
+        return { x: random(0, width), y: initial ? random(0, height) : random(-30, -5), r: random(.7, 1.8), vy: random(.12, .48), vx: random(-.12, .12), alpha: random(.15, .45), phase: random(0, Math.PI * 2), burst: 0, bx: 0, by: 0 };
+      }
+      function onPointer(event) { pointer.x = event.clientX; pointer.y = event.clientY; }
+      window.addEventListener('resize', resize, { passive: true });
+      window.addEventListener('pointermove', onPointer, { passive: true });
+      window.addEventListener('pointerleave', () => { pointer.x = -9999; pointer.y = -9999; });
+      resize();
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach((p, index) => {
+          p.phase += .012;
+          const dx = p.x - pointer.x, dy = p.y - pointer.y;
+          const distance = Math.hypot(dx, dy);
+          if (distance < 72 && p.burst <= 0) {
+            const angle = Math.atan2(dy, dx);
+            p.burst = 16; p.bx = Math.cos(angle) * random(1.2, 2.7); p.by = Math.sin(angle) * random(1.2, 2.7);
+          }
+          if (p.burst > 0) {
+            p.x += p.bx; p.y += p.by; p.burst--; p.alpha *= .94;
+            if (p.burst === 0 || p.alpha < .05) particles[index] = makeStar();
+          } else {
+            p.x += p.vx; p.y += p.vy;
+            if (p.y > height + 8 || p.x < -8 || p.x > width + 8) particles[index] = makeStar();
+          }
+          const glow = distance < 90 ? 1 : 0;
+          const opacity = Math.min(.8, p.alpha + glow * .35 + Math.sin(p.phase) * .06);
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(83, 151, 235, ${opacity})`;
+          ctx.shadowColor = glow ? 'rgba(56, 149, 255, .8)' : 'rgba(100, 160, 230, .25)';
+          ctx.shadowBlur = glow ? 13 : 4;
+          ctx.arc(p.x, p.y, p.r + glow * .7, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.shadowBlur = 0;
+        if (!prefersReduced) frame = requestAnimationFrame(draw);
+      }
+      if (prefersReduced) draw(); else frame = requestAnimationFrame(draw);
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden && frame) cancelAnimationFrame(frame);
+        else if (!document.hidden && !prefersReduced) frame = requestAnimationFrame(draw);
+      });
+    })();
+
+    // ---------- Nhạc nền ambient tạo bằng Web Audio API ----------
+    (() => {
+      const widget = document.getElementById('musicWidget');
+      const toggle = document.getElementById('musicToggle');
+      const icon = document.getElementById('musicIcon');
+      const status = document.getElementById('musicStatus');
+      const slider = document.getElementById('volumeSlider');
+      const volumeValue = document.getElementById('volumeValue');
+      const hideButton = document.getElementById('hideMusicWidget');
+      const showButton = document.getElementById('showMusicWidget');
+
+      let audioContext = null;
+      let masterGain = null;
+      let lowPass = null;
+      let sequenceTimer = null;
+      let noteIndex = 0;
+      let isPlaying = false;
+
+      // Giai điệu ngắn, nhẹ nhàng; các nốt được phát luân phiên như arpeggio.
+      const melody = [
+        261.63, 329.63, 392.00, 329.63,
+        293.66, 349.23, 440.00, 349.23,
+        261.63, 329.63, 392.00, 523.25,
+        440.00, 392.00, 349.23, 329.63
+      ];
+
+      function updateVolume() {
+        const value = Number(slider.value);
+        volumeValue.textContent = value + '%';
+        if (masterGain && audioContext) {
+          masterGain.gain.setTargetAtTime((value / 100) * 0.48, audioContext.currentTime, 0.08);
+        }
+      }
+
+      function playTone(frequency, duration = 1.15, peak = 0.34, wave = 'sine', delay = 0) {
+        if (!audioContext || !masterGain) return;
+
+        const startAt = audioContext.currentTime + delay;
+        const oscillator = audioContext.createOscillator();
+        const envelope = audioContext.createGain();
+        const toneFilter = audioContext.createBiquadFilter();
+
+        oscillator.type = wave;
+        oscillator.frequency.setValueAtTime(frequency, startAt);
+        oscillator.frequency.linearRampToValueAtTime(frequency * 1.002, startAt + duration);
+
+        toneFilter.type = 'lowpass';
+        toneFilter.frequency.setValueAtTime(1500, startAt);
+        toneFilter.Q.value = 0.55;
+
+        envelope.gain.setValueAtTime(0.0001, startAt);
+        envelope.gain.exponentialRampToValueAtTime(peak, startAt + 0.07);
+        envelope.gain.setValueAtTime(peak * 0.72, startAt + 0.22);
+        envelope.gain.exponentialRampToValueAtTime(0.0001, startAt + duration);
+
+        oscillator.connect(toneFilter);
+        toneFilter.connect(envelope);
+        envelope.connect(masterGain);
+
+        oscillator.start(startAt);
+        oscillator.stop(startAt + duration + 0.03);
+      }
+
+      function playNextStep() {
+        if (!isPlaying || !audioContext) return;
+        const frequency = melody[noteIndex % melody.length];
+
+        // Nốt giai điệu chính
+        playTone(frequency, 1.35, 0.32, 'sine');
+
+        // Nốt đệm trầm xuất hiện thưa hơn để tạo cảm giác êm, không dồn dập
+        if (noteIndex % 4 === 0) {
+          playTone(frequency / 2, 2.2, 0.12, 'triangle', 0.02);
+        }
+
+        // Một nốt hòa âm nhẹ ở một số nhịp
+        if (noteIndex % 2 === 1) {
+          playTone(frequency * 1.5, 0.9, 0.075, 'sine', 0.04);
+        }
+
+        noteIndex += 1;
+      }
+
+      async function startMusic() {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) {
+          status.textContent = 'Trình duyệt này chưa hỗ trợ âm thanh nền.';
+          return;
+        }
+
+        if (!audioContext) {
+          audioContext = new AudioContextClass();
+          masterGain = audioContext.createGain();
+          lowPass = audioContext.createBiquadFilter();
+          lowPass.type = 'lowpass';
+          lowPass.frequency.value = 2400;
+          masterGain.gain.value = 0;
+          masterGain.connect(lowPass);
+          lowPass.connect(audioContext.destination);
+        }
+
+        if (audioContext.state === 'suspended') await audioContext.resume();
+        isPlaying = true;
+        updateVolume();
+
+        widget.classList.add('playing');
+        toggle.setAttribute('aria-pressed', 'true');
+        toggle.setAttribute('aria-label', 'Tạm dừng nhạc nền');
+        icon.innerHTML = '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+        status.textContent = 'Đang phát giai điệu thư giãn';
+
+        playNextStep();
+        if (sequenceTimer) window.clearInterval(sequenceTimer);
+        sequenceTimer = window.setInterval(playNextStep, 780);
+      }
+
+      function stopMusic() {
+        isPlaying = false;
+        if (sequenceTimer) {
+          window.clearInterval(sequenceTimer);
+          sequenceTimer = null;
+        }
+        if (masterGain && audioContext) {
+          masterGain.gain.setTargetAtTime(0, audioContext.currentTime, 0.08);
+        }
+        widget.classList.remove('playing');
+        toggle.setAttribute('aria-pressed', 'false');
+        toggle.setAttribute('aria-label', 'Bật nhạc nền');
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        status.textContent = 'Đang tắt · Nhấn nút phát để nghe';
+      }
+
+      toggle.addEventListener('click', async () => {
+        if (isPlaying) {
+          stopMusic();
+        } else {
+          try {
+            await startMusic();
+          } catch (error) {
+            status.textContent = 'Không phát được âm thanh. Hãy thử nhấn phát lại.';
+            console.error('Không thể khởi tạo âm thanh:', error);
+          }
+        }
+      });
+
+      slider.addEventListener('input', updateVolume);
+      hideButton.addEventListener('click', () => {
+        widget.classList.add('hidden');
+        showButton.classList.remove('hidden');
+      });
+      showButton.addEventListener('click', () => {
+        showButton.classList.add('hidden');
+        widget.classList.remove('hidden');
+      });
+
+      updateVolume();
+    })();
+  </script>
 </body>
 </html>
